@@ -1,0 +1,76 @@
+Record size:4
+	1.Number of records:3000 
+		Library:
+			real 0m5.268s
+			user 0m0.859s
+			sys  0m4.346s
+	  	System:
+		  	real 0m3.005s
+			user 0m0.155s
+			sys  0m2.841s
+	2.Number of records:5000
+		Library:
+			real 0m13.926s
+			user 0m2.294s
+			sys  0m11.591s
+	  	System:
+		  	real 0m8.887s
+			user 0m0.404s
+			sys  0m8.429s
+Record size:512
+	1.Number of records:3000 
+		Library:
+			real 0m5.846s
+			user 0m0.970s
+			sys  0m4.858s
+	  	System:
+		  	real 0m3.636s
+			user 0m0.146s
+			sys  0m3.480s
+	2.Number of records:5000
+		Library:
+			real 0m15.628s
+			user 0m2.762s
+			sys  0m12.815s
+	  	System:
+		  	real 0m10.231s
+			user 0m0.432s
+			sys  0m9.761s
+Record size:4096
+	1.Number of records:3000 
+		Library:
+			real 0m6.565s
+			user 0m0.722s
+			sys  0m5.824s
+	  	System:
+		  	real 0m6.106s
+			user 0m0.172s
+			sys  0m5.885s
+	2.Number of records:5000
+		Library:
+			real 0m19.857s
+			user 0m2.101s
+			sys  0m17.657s
+	  	System:
+		  	real 0m15.632s
+			user 0m0.414s
+			sys  0m15.081s
+Record size:8192
+	1.Number of records:3000 
+		Library:
+			real 0m10.326s
+			user 0m0.711s
+			sys  0m9.581s
+	  	System:
+		  	real 0m9.727s
+			user 0m0.171s
+			sys  0m9.525s
+	2.Number of records:5000
+		Library:
+			real 0m28.987s
+			user 0m2.489s
+			sys  0m26.413s
+	  	System:
+		  	real 0m25.143s
+			user 0m0.471s
+			sys  0m24.594s
