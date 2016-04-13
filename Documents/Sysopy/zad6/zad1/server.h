@@ -6,6 +6,7 @@
 #include <string.h>
 #include <time.h>
 #include <unistd.h>
+#include <signal.h>
 
 #ifndef ALL_PERM
 	#define ALL_PERM 0600 //Read by user.

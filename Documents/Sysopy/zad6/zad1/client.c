@@ -1,5 +1,7 @@
 #include "server.h"
 
+int scqid;//Needs to be global to be closed by SIGINT handler
+
 void send_ready_signal(int csqid,mymsg * msg,int clid){
 	msg->mtype = CL_RED;
 	sprintf(msg->mtext,"%d",clid);
@@ -8,7 +10,7 @@ void send_ready_signal(int csqid,mymsg * msg,int clid){
 		exit(1);	
 	}
 }
-int wait_for_data(int scqid,mymsg * msg){
+int wait_for_data(mymsg * msg){
 	if(msgrcv(scqid, msg, MSG_SIZE, 0, MSG_NOERROR)==-1){
 		perror("Receiving error");
 		exit(1);
@@ -34,12 +36,22 @@ void send_result(int csqid,mymsg * msg){
 		exit(1);	
 	}
 }
+void sig_handle(int signo){
+	if(signo==SIGINT){
+		if(msgctl(scqid,IPC_RMID, 0) == -1){
+            perror("Closing error");
+			exit(1);
+        }
+		exit(0);
+	}
+}
 int main(int argv,char**argc){
 	int csqid;
-	int scqid;
 	mymsg msg;
 	int clid;
 	int tasknum;
+
+	signal(SIGINT,sig_handle);
 
 	//client->server queue opening arg[0]-path arg[1]-proj_id
     key_t key = ftok(argc[1], atoi(argc[2]));
@@ -54,7 +66,7 @@ int main(int argv,char**argc){
 		perror("Creating queue error");
 		exit(1);
 	}
-
+	printf("%d\n",scqid);
 	//client->server  registration
 	msg.mtype = CL_REG;
 	sprintf(msg.mtext,"%d",scqid);
@@ -73,7 +85,7 @@ int main(int argv,char**argc){
 		//Client ready for task
 		send_ready_signal(csqid,&msg,clid);
 		//Client wait for number from server
-		tasknum = wait_for_data(scqid,&msg);
+		tasknum = wait_for_data(&msg);
 		//Check if prime and respond
 		sprintf(msg.mtext,"%d %d %d",clid,tasknum,isprime(tasknum));
 		send_result(csqid,&msg);

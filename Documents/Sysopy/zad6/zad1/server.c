@@ -4,6 +4,7 @@
 	and pass it name as first argument and
 	some unsigned short as second argument
 */
+int csqid;//Needs to be global to be removed after SIGINT
 void register_client(int * clients,int * index,mymsg * msg){
 	clients[*index]=atoi(msg->mtext);
 	sprintf(msg->mtext,"%d",*index);
@@ -46,13 +47,24 @@ void print_result(mymsg * msg){
 		free(number);
 	}
 }
+void sig_handle(int signo){
+	if(signo==SIGINT){
+		if(msgctl(csqid,IPC_RMID, 0) == -1){
+            perror("Closing error");
+			exit(1);
+        }
+		exit(0);
+	}
+}
 int main(int argv,char**argc){
-	int csqid;
 	key_t key;
 	mymsg msg;
 	int clients[100];
 	int index = 0;
 	srand(time(NULL));
+
+	signal(SIGINT,sig_handle);
+
 	//client->server queue creation arg[0]-path arg[1]-proj_id
     if((key = ftok(argc[1], atoi(argc[2])))==-1){
     	perror("Key error");
